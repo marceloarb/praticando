@@ -12,7 +12,7 @@ public class Player extends Rectangle{
 	private int speed = 3;
 	
 	public Player(int x, int y) {
-		setBounds(x,y,32,32);
+		setBounds(x,y,30,30);
 	}
 	
 	public void tick() {
@@ -54,7 +54,7 @@ public class Player extends Rectangle{
 	}
 	
 	public void render(Graphics g) {
-		g.drawImage(Texture.player[0], x, y, 32,32,null);
+		g.drawImage(Texture.player[0], x, y, 30,30,null);
 	}
 	
 }

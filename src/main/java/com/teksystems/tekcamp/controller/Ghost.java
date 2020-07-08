@@ -16,7 +16,7 @@ public class Ghost extends Rectangle{
 	private int dir = -1;
 	private int time = 0;
 	
-	private int targetTime = 40*4;
+	private int targetTime = 60*10;
 	
 	private int speed = 3;
 	
@@ -25,7 +25,7 @@ public class Ghost extends Rectangle{
 	private int lastDir = -1;
 	public Ghost(int x , int y) {
 		randomGen = new Random();
-		setBounds(x,y,32,32);
+		setBounds(x,y,30,30);
 		dir = randomGen.nextInt(4);
 	}
 	

@@ -131,10 +131,34 @@ public synchronized void stop() {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_RIGHT) player.right = true;
-		if(e.getKeyCode() == KeyEvent.VK_LEFT) player.left = true;
-		if(e.getKeyCode() == KeyEvent.VK_UP) player.up = true;
-		if(e.getKeyCode() == KeyEvent.VK_DOWN) player.down = true;
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			player.right = true;
+			player.left = false;
+			player.up = false;
+			player.down = false;
+			return;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+			player.left = true;
+			player.right = false;
+			player.up = false;
+			player.down = false;
+			return;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_UP) {
+			player.up = true;
+			player.left = false;
+			player.right = false;
+			player.down = false;
+			return;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_DOWN) {
+			player.down = true;
+			player.left = false;
+			player.up = false;
+			player.right = false;
+			return;
+		}
 	}
 
 	@Override
