@@ -16,10 +16,39 @@ public class Player extends Rectangle{
 	}
 	
 	public void tick() {
-		if(right) x+=speed;
-		if(left) x-=speed;
-		if(up) y-=speed;
-		if(down) y+=speed;
+		if(right && canMove(x+speed,y)) x+=speed;
+		if(left && canMove(x-speed,y)) x-=speed;
+		if(up && canMove(x,y-speed)) y-=speed;
+		if(down && canMove(x,y+speed)) y+=speed;
+		
+		for(int i = 0; i<Controller.boards.coins.size(); i++) {
+			if(this.intersects(Controller.boards.coins.get(i))) {
+				Controller.boards.coins.remove(i);
+				break;
+			}
+		};
+		
+		if(Controller.boards.coins.size() == 0) {
+			
+		}
+		
+	}
+	
+	private boolean canMove(int nextX, int nextY) {
+		
+		Rectangle bounds = new Rectangle(nextX,nextY,width,height);
+		
+		for(int x = 0; x<Controller.boards.blocks.length; x++) {
+			for(int y = 0; y<Controller.boards.blocks[0].length; y++) {
+				if(Controller.boards.blocks[x][y] != null) {
+					if(bounds.intersects(Controller.boards.blocks[x][y])) {
+						return false;
+					}
+				}
+			}
+		}
+		
+		return true;
 	}
 	
 	public void render(Graphics g) {

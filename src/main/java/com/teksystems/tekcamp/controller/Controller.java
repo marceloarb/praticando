@@ -10,9 +10,9 @@ import java.awt.image.BufferStrategy;
 
 
 public class Controller extends Canvas implements Runnable, KeyListener {
-	
+	private static final long serialVersionUID = 1L;
 	private boolean isRunning = false;
-	private static final int WIDTH = 1280,HEIGHT = 1280;
+	private static final int WIDTH = 1280,HEIGHT = 960;
 	public static final String TITLE = "PACMAN";
 	public static Board boards;
 	private Thread thread;
@@ -28,7 +28,7 @@ public class Controller extends Canvas implements Runnable, KeyListener {
 		setMaximumSize(dimension);
 		addKeyListener(this);
 		player = new Player(Controller.WIDTH/2,Controller.HEIGHT/2);
-		boards = new Board("/Users/marcelobarbosa/Documents_copy/teksystems/com.teksystems.Pacman/src/main/resources/Image/pacman.png");
+		boards = new Board("/Image/pacman1.png");
 	}
 
 	public synchronized void start() {
@@ -79,14 +79,19 @@ public synchronized void stop() {
 
 
 	private void tick() {
-		player.tick();
 		
+		player.tick();
+		boards.tick();
 	}
+	
+	
+	
 	
 	@Override
 	public void run() {
 		//So you dont have to click on the window to move the player
 		requestFocus();
+		
 		Long lastTime = System.nanoTime();
 		double delta = 0;
 		double targetTick = 40.0;
@@ -106,7 +111,6 @@ public synchronized void stop() {
 			}
 			
 			if(System.currentTimeMillis() - timer >= 1000) {
-				System.out.println(fps);
 				fps = 0;
 				timer+=1000;
 			}
