@@ -10,12 +10,14 @@ import java.awt.image.BufferStrategy;
 
 
 public class Controller extends Canvas implements Runnable, KeyListener {
+	//Canvas is a blank rectangular area where we can draw or trap input events from the user.
 	private static final long serialVersionUID = 1L;
 	private boolean isRunning = false;
 	private static final int WIDTH = 1280,HEIGHT = 960;
 	public static final String TITLE = "PACMAN";
 	public static Board boards;
 	private Thread thread;
+	public static SpriteSheet spriteSheet;
 	
 	public static Player player;
 	
@@ -29,17 +31,19 @@ public class Controller extends Canvas implements Runnable, KeyListener {
 		addKeyListener(this);
 		player = new Player(Controller.WIDTH/2,Controller.HEIGHT/2);
 		boards = new Board("/Image/pacman1.png");
+		spriteSheet = new SpriteSheet("/Image/caracter1.png");
+		
+		new Texture();
 	}
 
 	public synchronized void start() {
 		if(isRunning) {
 			return;
 		}
-		else {
-			isRunning = true;
-			thread = new Thread(this);
-			thread.start();
-		}
+		isRunning = true;
+		thread = new Thread(this);
+		thread.start();
+		
 		
 	}
 	
@@ -47,7 +51,6 @@ public synchronized void stop() {
 		if(!isRunning) {
 			return;
 		}
-		else {
 			isRunning = false;
 			try {
 				thread.join();
@@ -55,7 +58,6 @@ public synchronized void stop() {
 				
 				e.printStackTrace();
 			}
-		}
 	}
 	
 		
@@ -91,12 +93,13 @@ public synchronized void stop() {
 	public void run() {
 		//So you dont have to click on the window to move the player
 		requestFocus();
-		
+		//This function below is to set the time we want our tread to run.
 		Long lastTime = System.nanoTime();
 		double delta = 0;
+		//targetTick is the time we want our game to run.
 		double targetTick = 40.0;
 		double interval =   1000000000/targetTick;
-		int fps = 0;
+		int framespersecond = 0;
 		double timer = System.currentTimeMillis();
 		
 		while(isRunning) {
@@ -106,12 +109,12 @@ public synchronized void stop() {
 			while(delta >= 1) {
 				tick();
 				render();
-				fps++;
+				framespersecond++;
 				delta--;
 			}
 			
 			if(System.currentTimeMillis() - timer >= 1000) {
-				fps = 0;
+				framespersecond = 0;
 				timer+=1000;
 			}
 			

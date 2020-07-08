@@ -29,7 +29,9 @@ public class Player extends Rectangle{
 		};
 		
 		if(Controller.boards.coins.size() == 0) {
-			
+			Controller.player = new Player(0,0);
+			Controller.boards = new Board("/Image/pacman1.png");
+			return;
 		}
 		
 	}
@@ -52,8 +54,7 @@ public class Player extends Rectangle{
 	}
 	
 	public void render(Graphics g) {
-		g.setColor(Color.yellow);
-		g.fillRect(x, y, width, height);
+		g.drawImage(Texture.player[0], x, y, 32,32,null);
 	}
 	
 }
