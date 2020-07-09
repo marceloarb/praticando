@@ -16,7 +16,7 @@ public class Ghost extends Rectangle{
 	private int dir = -1;
 	private int time = 0;
 	
-	private int targetTime = 60*10;
+	private int targetTime = 40*4;
 	
 	private int speed = 3;
 	
@@ -78,24 +78,28 @@ public class Ghost extends Rectangle{
 			if(x<Controller.player.x) {
 				if(canMove(x+speed,y)) {
 					x+=speed;
+					move = true;
 					lastDir = right;
 				}
 			}
 			if(x>Controller.player.x) {
 				if(canMove(x-speed,y)) {
 					x-=speed;
+					move = true;
 					lastDir = left;
 				}
 			}
 			if(y<Controller.player.y) {
 				if(canMove(x,y+speed)) {
 					y+=speed;
+					move = true;
 					lastDir = down;
 				}
 			}
 			if(y>Controller.player.y) {
 				if(canMove(x,y-speed)) {
 					y-=speed;
+					move = true;
 					lastDir = up;
 				}
 			}
@@ -103,6 +107,11 @@ public class Ghost extends Rectangle{
 			if(x == Controller.player.x && y == Controller.player.y) move = true;
 			if(!move) {
 				state = findPath;
+			}
+			time++;
+			if(time == targetTime ) {
+				state = random;
+				time = 0;
 			}
 			
 			else if(state == findPath) {
@@ -184,11 +193,11 @@ public class Ghost extends Rectangle{
 				
 			}
 			
-//			time++;
-//			if(time == targetTime * 2) {
-//				state = smart;
-//				time = 0;
-//			}
+			time++;
+			if(time == targetTime ) {
+				state = random;
+				time = 0;
+			}
 			
 		}
 		
@@ -212,8 +221,7 @@ private boolean canMove(int nextX, int nextY) {
 	}
 	
 	public void render(Graphics g) {
-		SpriteSheet sheet = Controller.spriteSheet;
-		g.drawImage(Texture.ghost, x, y,32,32, null);
+		g.drawImage(Texture.ghost, x, y,30,30, null);
 		
 	}
 	

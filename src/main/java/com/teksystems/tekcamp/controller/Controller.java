@@ -3,10 +3,13 @@ package com.teksystems.tekcamp.controller;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
+
+import com.teksystems.tekcamp.Menu.Menu;
 
 
 public class Controller extends Canvas implements Runnable, KeyListener {
@@ -18,6 +21,8 @@ public class Controller extends Canvas implements Runnable, KeyListener {
 	public static Board boards;
 	private Thread thread;
 	public static SpriteSheet spriteSheet;
+
+	int choice = 1;
 	
 	public static Player player;
 	
@@ -70,8 +75,15 @@ public synchronized void stop() {
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
+		if(choice == -1) {
 		player.render(g);
 		boards.render(g);
+		}else {
+			g.setColor(Color.DARK_GRAY);
+			g.fillRect(0, 0, 200, 200);
+			g.setFont(new Font(Font.DIALOG,Font.BOLD,19));
+			g.drawString("chupa rola", 500, 500);
+		}
 		g.dispose();
 		bs.show();
 		
@@ -81,9 +93,10 @@ public synchronized void stop() {
 
 
 	private void tick() {
-		
+		if(choice == -1) {
 		player.tick();
 		boards.tick();
+		}
 	}
 	
 	
